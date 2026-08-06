@@ -1,0 +1,472 @@
+/* FIX RESPONSIVE: KHÓA LAYOUT VÀ TRẢ LẠI QUYỀN ĐÓNG/MỞ CHO MOBILE */
+
+/* 1. ĐỊNH DẠNG TRÊN MOBILE DRAWER (MÀN HÌNH DI ĐỘNG < 1200PX) */
+@media (max-width: 1200px) {
+    #halim .navbar-nav>li.mi-genre .dropdown-menu {
+        position: static !important;
+        /* Xếp hàng dọc nối đuôi nhau không đè chữ */
+        display: none;
+        float: none !important;
+        margin: 2px 12px 6px 28px !important;
+        /* Thụt lề đầu dòng ngay ngắn */
+        width: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Kích hoạt hiển thị đồng bộ class .open từ React khi Click mở trên điện thoại */
+    #halim .navbar-nav>li.mi-genre.open .dropdown-menu {
+        display: block !important;
+    }
+}
+
+/* 2. ĐỊNH DẠNG TRÊN DESKTOP NAV (MÀN HÌNH MÁY TÍNH LỚN ≥ 1201PX) */
+@media (min-width: 1201px) {
+
+    /* Khi ở màn hình PC, tự động hiện menu khi HOVER chuột */
+    #halim .navbar-nav>li.mi-genre:hover .dropdown-menu,
+    .custom-hover-dropdown:hover .dropdown-menu {
+        display: block !important;
+    }
+
+    /* Khóa vùng chứa không tự sinh ra thanh cuộn dọc (scrollbar) trên PC */
+    #halim,
+    .navbar-collapse,
+    .menu-menu-container {
+        overflow: visible !important;
+        max-height: none !important;
+    }
+
+    #halim#halim.navbar-collapse.hh3d-nav-drawer-portal {
+        display: none !important;
+    }
+
+    /* Cấu hình bảng menu con bay lơ lửng đè lên poster phim trên PC */
+    #halim .navbar-nav>li.mi-genre .dropdown-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        margin-top: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        overflow-y: visible !important;
+        z-index: 999999 !important;
+    }
+
+    /* Tạo chiếc cầu tàng hình chống lag chuột khi lướt trên PC */
+    #halim .navbar-nav>li.mi-genre .dropdown-menu::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: transparent !important;
+        display: block !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+/* ẨN KHỐI TRƯỢT MŨI TÊN TRÊN MÀN HÌNH LỚN HƠN 766PX */
+
+/* 1. MẶC ĐỊNH (PC VÀ MÀN HÌNH LỚN > 766PX): Ẩn hoàn toàn dải trượt chứa mũi tên */
+.hh3d-sched-strip {
+    display: none !important;
+}
+
+/* 2. CHỈ KÍCH HOẠT FLEXBOX TRÊN MOBILE THỰC TẾ (MÀN HÌNH NHỎ ≤ 766PX) */
+@media (max-width: 766px) {
+
+    /* Ép khung chứa mũi tên và các Thứ nằm trên cùng một hàng ngang phẳng phiu */
+    .hh3d-sched-strip {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 6px !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+        padding: 0 4px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Ép dải trượt Thứ ở giữa tự động chiếm không gian trống, không đẩy mũi tên xuống dòng */
+    .hh3d-sched-strip>ul.halim-schedule-block-mobile.menu.schedule {
+        flex: 1 1 auto !important;
+        margin: 0 !important;
+        padding: 4px 0 !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        /* Khóa chặt không cho các nút Thứ rớt dòng */
+    }
+
+    /* Định hình cố định kích thước 2 nút mũi tên đứng yên ở hai rìa biên */
+    .hh3d-sched-arrow {
+        flex: 0 0 auto !important;
+        /* Khóa chống co móp nút */
+        width: 22px !important;
+        height: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        border: none !important;
+        z-index: 10 !important;
+    }
+}
+
+div#root>div#hh3d-root-wrapper .im {
+    display: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #1c1c1c
+}
+
+@font-face {
+    font-family: "Material Icons Round";
+    font-style: normal;
+    font-weight: 400;
+    src: url(/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'halimfont';
+    src: url(/fonts/halimfont.woff2);
+    font-weight: normal;
+    font-style: normal
+}
+
+
+@font-face {
+    font-family: Material Icons;
+    font-style: normal;
+    font-weight: 400;
+    src: url(./fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format("woff2")
+}
+
+/* @font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(./assets/fonts/fa-regular-400.woff2) format("woff2"), url(//hoathinh3d.st/wp-content/plugins/menu-icons/css/fontawesome/css/../webfonts/fa-regular-400.ttf) format("truetype");
+} */
+
+@font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(/fonts/fa-regular-400.woff2) format("woff2"),url(/fonts/fa-regular-400.ttf) format("truetype")
+}
+
+@font-face {
+    font-family: "Font Awesome 5 Free";
+    font-display: block;
+    font-weight: 900;
+    src: url(./assets/fonts/fa-solid-900.woff2) format("woff2"), url(/hoathinh3d/public/fonts/fa-solid-900.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Font Awesome 5 Free";
+    font-display: block;
+    font-weight: 400;
+    src: url(./assets/fonts/fa-regular-400.woff2) format("woff2"), url(/hoathinh3d/public/fonts/fa-regular-400.ttf) format("truetype")
+}
+
+/* @font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Montserrat Light'), local('Montserrat-Light'), url(./assets/fonts/JTURjIg1_i6t8kCHKm45_cJD3gTD_u50.woff2) format('woff2');
+    unicode-range: U +0460 -052F, U +1C80 -1C88, U +20B4, U +2DE0 -2DFF, U + A640-A69F, U + FE2E-FE2F;
+} */
+/* Nhân bản thẻ HTML/BODY (không dùng class) */
+html body {
+  font-family: 'Montserrat', sans-serif;
+}
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Montserrat Light'), local('Montserrat-Light'), url(./assets/fonts/JTURjIg1_i6t8kCHKm45_cJD3gTD_u50.woff2) format('woff2');
+    unicode-range: U +0460 -052F, U +1C80 -1C88, U +20B4, U +2DE0 -2DFF, U + A640-A69F, U + FE2E-FE2F;
+}
+
+@font-face {
+    font-family: toai_niet;
+    src: url(./assets/fonts/toai-niet-fix.ttf) format("truetype");
+}
+
+#wpdcom .wpd-blog-toai_niet_hau .wpd-comment-author,
+#wpdcom .wpd-blog-toai_niet_so .wpd-comment-author,
+#wpdcom .wpd-blog-toai_niet_trung .wpd-comment-author {
+    animation: kaleidoscope 8s linear infinite;
+    background: url(./assets/image/khung/toai-niet.webp);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-position: 50%;
+    background-size: auto;
+    color: transparent;
+    font-family: toai_niet;
+    font-size: 22px !important;
+    font-weight: 800
+}
+
+a {
+    color: #87c3f9
+}
+
+a,
+a:hover,
+a:focus {
+    text-decoration: none
+}
+
+textarea,
+select,
+input {
+    outline: none
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px
+}
+
+::-webkit-scrollbar-track {
+    background: #213342
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3b6080
+}
+
+::-moz-selection {
+    background: #000;
+    text-shadow: none
+}
+
+::selection {
+    background: #fd9dff;
+    color: #fff;
+    text-shadow: none
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle
+}
+
+img:hover {
+    filter: brightness(1);
+    -webkit-filter: brightness(1)
+}
+
+.noti-tick {
+    overflow: hidden;
+    height: 34px;
+    background: rgba(0, 0, 0, .2);
+    border-left: 3px solid #f5c842;
+    border-radius: 0 5px 5px 0;
+    margin: 4px 0;
+    cursor: default;
+    user-select: none
+}
+
+.noti-tick__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: 100%;
+    animation: noti-scroll 110s linear infinite
+}
+
+.noti-tick:hover .noti-tick__track {
+    animation-play-state: paused
+}
+
+.noti-tick__track span {
+    white-space: nowrap;
+    font-size: 12.5px;
+    color: #e8c84a;
+    padding: 0 2.5em;
+    text-shadow: 0 0 8px rgba(232, 200, 74, .45)
+}
+
+@keyframes noti-scroll {
+    from {
+        transform: translateX(0)
+    }
+
+    to {
+        transform: translateX(-50%)
+    }
+}
+
+.noti-tick[data-type=purchase] {
+    border-left-color: #00c8ff
+}
+
+.noti-tick[data-type=purchase] .noti-tick__track span {
+    color: #7be5ff;
+    text-shadow: 0 0 8px rgba(0, 200, 255, .35)
+}
+
+@media (max-width:767px) {
+    .noti-tick {
+        height: 30px
+    }
+
+    .noti-tick__track span {
+        font-size: 11px;
+        padding: 0 1.8em
+    }
+}
+
+
+
+/* loading global */
+#lc-sched-loading {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(8, 5, 18, .75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px
+}
+
+#lc-sched-loading.active {
+    display: flex
+}
+
+.lc-loader-ring {
+    position: relative;
+    width: 72px;
+    height: 72px
+}
+
+.lc-loader-ring:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(232, 200, 114, .15)
+}
+
+:root {
+    --lc-gold: #e8c872;
+    --lc-paper-dim: #c4b896;
+}
+
+.lc-loader-ring:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: var(--lc-gold);
+    border-right-color: rgba(94, 196, 160, .5);
+    animation: lc-spin .9s linear infinite
+}
+
+.lc-loader-dot {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--lc-gold);
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(232, 200, 114, .5)
+}
+
+.lc-loader-text {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--lc-paper-dim);
+    text-transform: uppercase
+}
+
+.lc-loader-text span {
+    animation: lc-blink .9s ease infinite
+}
+
+.lc-loader-text span:nth-child(2) {
+    animation-delay: .15s
+}
+
+.lc-loader-text span:nth-child(3) {
+    animation-delay: .3s
+}
+
+@keyframes lc-spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes lc-blink {
+
+    0%,
+    100% {
+        opacity: 1
+    }
+
+    50% {
+        opacity: .25
+    }
+}
+
+.vip-unlock-btn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, rgb(255, 122, 0) 0%, rgb(255, 159, 64) 50%, rgb(255, 102, 0) 100%);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid rgb(230, 105, 0);
+    border-radius: 6px;
+    box-shadow: rgba(255, 122, 0, 0.6) 0px 1px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+    transform: translateY(0px);
+}
+
+.vip-unlock-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: rgba(255, 122, 0, 0.6) 0px 6px 20px;
+}

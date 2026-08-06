@@ -1,0 +1,138 @@
+// buttons.jsx
+import {
+  CaptionButton,
+  FullscreenButton,
+  isTrackCaptionKind,
+  MuteButton,
+  PIPButton,
+  PlayButton,
+  Tooltip,
+  useMediaState,
+} from '@vidstack/react';
+
+// SỬA ĐỔI: Thay đổi đường dẫn import từ '@vidstack/react/icons' sang '@vidstack/react/player/icons'
+import {
+  ClosedCaptionsIcon,
+  ClosedCaptionsOnIcon,
+  FullscreenExitIcon,
+  FullscreenIcon,
+  MuteIcon,
+  PauseIcon,
+  PictureInPictureExitIcon,
+  PictureInPictureIcon,
+  PlayIcon,
+  VolumeHighIcon,
+  VolumeLowIcon,
+} from '@vidstack/react/icons';
+
+// Các lớp Tailwind CSS dùng chung cho các nút và tooltip
+export const buttonClass =
+  'group ring-media-focus relative inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md outline-none ring-inset hover:bg-white/20 data-[focus]:ring-4';
+
+export const tooltipClass =
+  'animate-out fade-out slide-out-to-bottom-2 data-[visible]:animate-in data-[visible]:fade-in data-[visible]:slide-in-from-bottom-4 z-10 rounded-sm bg-black/90 px-2 py-0.5 text-sm font-medium text-white parent-data-[open]:hidden';
+
+// 1. Nút Phát / Tạm dừng phim
+export function Play({ tooltipPlacement }) {
+  const isPaused = useMediaState('paused');
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <PlayButton className={buttonClass}>
+          {isPaused ? <PlayIcon className="w-8 h-8" /> : <PauseIcon className="w-8 h-8" />}
+        </PlayButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={tooltipClass} placement={tooltipPlacement}>
+        {isPaused ? 'Play' : 'Pause'}
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
+
+// 2. Nút Bật / Tắt / Thay đổi biểu tượng âm lượng theo mức độ
+export function Mute({ tooltipPlacement }) {
+  const volume = useMediaState('volume');
+  const isMuted = useMediaState('muted');
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <MuteButton className={buttonClass}>
+          {isMuted || volume === 0 ? (
+            <MuteIcon className="w-8 h-8" />
+          ) : volume < 0.5 ? (
+            <VolumeLowIcon className="w-8 h-8" />
+          ) : (
+            <VolumeHighIcon className="w-8 h-8" />
+          )}
+        </MuteButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={tooltipClass} placement={tooltipPlacement}>
+        {isMuted ? 'Unmute' : 'Mute'}
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
+
+// 3. Nút Bật / Tắt Phụ đề (Subtitles)
+export function Caption({ tooltipPlacement }) {
+  const track = useMediaState('textTrack');
+  const isOn = track && isTrackCaptionKind(track);
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <CaptionButton className={buttonClass}>
+          {isOn ? (
+            <ClosedCaptionsOnIcon className="w-8 h-8" />
+          ) : (
+            <ClosedCaptionsIcon className="w-8 h-8" />
+          )}
+        </CaptionButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={tooltipClass} placement={tooltipPlacement}>
+        {isOn ? 'Closed-Captions Off' : 'Closed-Captions On'}
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
+
+// 4. Nút Thu nhỏ màn hình góc (Picture-in-Picture)
+export function PIP({ tooltipPlacement }) {
+  const isActive = useMediaState('pictureInPicture');
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <PIPButton className={buttonClass}>
+          {isActive ? (
+            <PictureInPictureExitIcon className="w-8 h-8" />
+          ) : (
+            <PictureInPictureIcon className="w-8 h-8" />
+          )}
+        </PIPButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={tooltipClass} placement={tooltipPlacement}>
+        {isActive ? 'Exit PIP' : 'Enter PIP'}
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
+
+// 5. Nút Bật / Thoát chế độ toàn màn hình (Fullscreen)
+export function Fullscreen({ tooltipPlacement }) {
+  const isActive = useMediaState('fullscreen');
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <FullscreenButton className={buttonClass}>
+          {isActive ? (
+            <FullscreenExitIcon className="w-8 h-8" />
+          ) : (
+            <FullscreenIcon className="w-8 h-8" />
+          )}
+        </FullscreenButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content className={tooltipClass} placement={tooltipPlacement}>
+        {isActive ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
