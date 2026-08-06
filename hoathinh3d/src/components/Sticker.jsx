@@ -10,26 +10,26 @@ export const MOCK_PACKS = [
   {
     id: 29,
     name: "Thỏ Hài Nhạt",
-    icon: "https://hoathinh3d.st/wp-content/uploads/bm-stickers/tho-hai-nhat/tho-hai-nhat-1.webp",
+    icon: "/stickers/tho-hai-nhat-1.webp",
     stickers: [
-      { id: 1056, url: "https://hoathinh3d.st/wp-content/uploads/bm-stickers/tho-hai-nhat/tho-hai-nhat-1.webp" },
-      { id: 1057, url: "https://hoathinh3d.st/wp-content/uploads/bm-stickers/tho-hai-nhat/tho-hai-nhat-2.webp" },
+      { id: 1056, url: "/stickers/tho-hai-nhat-1.webp" },
+      { id: 1057, url: "/stickers/tho-hai-nhat-2.webp" },
     ],
   },
   {
     id: 28,
     name: "Chuyện Chung Cư Cũ",
-    icon: "https://hoathinh3d.st/wp-content/uploads/bm-stickers/chuyen-chung-cu-cu/chuyen-chung-cu-cu-10.webp",
+    icon: "/stickers/chuyen-chung-cu-cu-10.webp",
     stickers: [
-      { id: 1042, url: "https://hoathinh3d.st/wp-content/uploads/bm-stickers/chuyen-chung-cu-cu/chuyen-chung-cu-cu-3.webp" },
+      { id: 1042, url: "/stickers/chuyen-chung-cu-cu-3.webp" },
     ],
   },
   {
     id: 1,
     name: "Quynh Aka - Stay At Home",
-    icon: "https://hoathinh3d.st/wp-content/uploads/bm-stickers/quynh-aka-stay-at-home/quynh-aka-stay-at-home-4.webp",
+    icon: "/stickers/quynh-aka-stay-at-home-4.webp",
     stickers: [
-      { id: 1001, url: "https://hoathinh3d.st/wp-content/uploads/bm-stickers/quynh-aka-stay-at-home/quynh-aka-stay-at-home-4.webp" },
+      { id: 1001, url: "/stickers/quynh-aka-stay-at-home-4.webp" },
     ],
   },
   {
