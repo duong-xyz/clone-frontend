@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import SearchFullscreenOverlay from '../components/SearchFullscreenOverlay';
 import CustomLoginModal from '../components/CustomLoginModal';
 import MovieWatchPanel from '../components/MovieWatchPanel';
-import TuTienComments from '../components/TuTienComments'
+import TuTienComments from '../components/TuTienComments1'
 import { Player } from '../players/Player'
 // import { useMediaState } from '@vidstack/react';
 import watchStyles from '../../public/css/watch.css?raw'
