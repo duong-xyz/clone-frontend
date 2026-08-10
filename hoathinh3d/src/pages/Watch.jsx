@@ -8,33 +8,14 @@ import MovieWatchPanel from '../components/MovieWatchPanel';
 import TuTienComments from '../components/TuTienComments'
 import { Player } from '../players/Player'
 // import { useMediaState } from '@vidstack/react';
-// import watchStyles from '../../public/css/watch.css?raw'
+import watchStyles from '../../public/css/watch.css?raw'
 import { HotkeyTooltip } from '../components/HotkeyTooltip';
 import { toggleClassEvent } from '../mocks/eventBus'
 import VipOverlay from '../components/VipOverlay';
+import Sticker from '../components/Sticker';
+import ReactionPicker from '../components/ReactionPicker';
 
 export default function Watch() {
-    const getPublicFileRaw = (url) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url, false);
-        xhr.send(null);
-        return xhr.responseText;
-    };
-    const watchStyles = getPublicFileRaw('/css/watch.css');
-
-    // useEffect(() => {
-    //     const linkElement = document.createElement('link');
-    //     linkElement.rel = 'stylesheet';
-    //     linkElement.href = '/detail.css';
-    //     linkElement.id = 'hoathinh3d-comment-css';
-    //     document.head.appendChild(linkElement);
-    //     return () => {
-    //         const dynamicLink = document.getElementById('hoathinh3d-comment-css');
-    //         if (dynamicLink) {
-    //             dynamicLink.remove();
-    //         }
-    //     };
-    // }, []);
     // 1. Tạo State quản lý trạng thái đóng/mở của màn hình tìm kiếm (Mặc định là đóng)
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     // 1. Khởi tạo State quản lý trạng thái Đóng/Mở Modal (Mặc định ban đầu là false tức là đóng)
@@ -126,6 +107,79 @@ export default function Watch() {
 
         targetEl.classList.toggle("is-open");
     };
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [onSelectStickerCallback, setOnSelectStickerCallback] = useState(null);
+    const [popupPos, setPopupPos] = useState(null); // Lưu { top, left }
+    const [isReaction, setIsReaction] = useState(false);
+    const [cmtId, setCmtId] = useState(null);
+    const handleOpenPopup = (rect, cmtId) => {
+        const POPUP_WIDTH = 220;
+        const POPUP_HEIGHT = 45;
+        const GAP = 15;
+        const PADDING = 10;
+        const win = window;
+        const docEl = document.documentElement;
+        const viewportWidth = docEl.clientWidth || win.innerWidth;
+        const scrollX = win.scrollX || win.pageXOffset;
+        const scrollY = win.scrollY || win.pageYOffset;
+        const showOnTop = rect.top >= (POPUP_HEIGHT + GAP + PADDING);
+        const absoluteTop = showOnTop
+            ? rect.top + scrollY - POPUP_HEIGHT - GAP
+            : rect.bottom + scrollY + GAP;
+
+        let absoluteLeft = rect.left + scrollX + (rect.width / 2) - (POPUP_WIDTH / 2);
+        absoluteLeft = Math.max(scrollX + PADDING, Math.min(absoluteLeft, scrollX + viewportWidth - POPUP_WIDTH - PADDING));
+        setPopupPos({ top: absoluteTop, left: absoluteLeft });
+        setIsReaction(true);
+        setCmtId(cmtId);
+        const DYNAMIC_HITBOX_ID = 'wv-picker-hitbox-style';
+        if (!document.getElementById(DYNAMIC_HITBOX_ID)) {
+            const styleTag = document.createElement('style');
+            styleTag.id = DYNAMIC_HITBOX_ID;
+            styleTag.textContent = `
+            .wv-reaction-picker { position: absolute !important; }
+            .wv-reaction-picker::after {
+                content: "" !important;
+                position: absolute !important;
+                left: -15px !important;
+                right: -15px !important;
+                height: var(--hitbox-height, 30px) !important;
+                background: transparent !important;
+                pointer-events: auto !important;
+                z-index: -1 !important;
+            }
+            .wv-reaction-picker[data-top="true"]::after { 
+                top: 100% !important; 
+                bottom: auto !important;
+            }
+            .wv-reaction-picker[data-top="false"]::after { 
+                bottom: 100% !important; 
+                top: auto !important;
+            }
+        `;
+            document.head.appendChild(styleTag);
+        }
+        const setupPopupNode = (attempts = 0) => {
+            const popupEls = document.querySelectorAll('.wv-reaction-picker');
+            const popupEl = popupEls[popupEls.length - 1];
+            if (!popupEl) {
+                if (attempts < 3) {
+                    requestAnimationFrame(() => setupPopupNode(attempts + 1));
+                }
+                return;
+            }
+            popupEl.dataset.top = showOnTop;
+            popupEl.style.setProperty('--hitbox-height', `${GAP + 15}px`);
+            popupEl.onmouseleave = () => setIsReaction(false);
+        };
+        requestAnimationFrame(() => setupPopupNode());
+    };
+    const handleClosePopup = () => {
+        setIsReaction(false);
+    };
+    const addVotesRef = useRef(null);
+
     return (
         <div id="scoped-home-wrapper">
             <style>{watchStyles}</style>
@@ -492,7 +546,12 @@ export default function Watch() {
                                     </section>
                                     <div className="clearfix" />
 
-                                    <TuTienComments />
+                                    <TuTienComments setIsOpen={setIsOpen}
+                                        setOnSelectStickerCallback={setOnSelectStickerCallback}
+                                        onOpenPopup={handleOpenPopup}
+                                        onClosePopup={handleClosePopup}
+                                        onInit={(fn) => (addVotesRef.current = fn)}
+                                    />
                                     <div id="lightout" />
                                 </div>
                             </section>
@@ -662,7 +721,14 @@ export default function Watch() {
                     </div>
                 </div>)}
 
-
+                <Sticker isOpen={isOpen} setIsOpen={setIsOpen}
+                    onSelectSticker={(sticker) => {
+                        if (typeof onSelectStickerCallback === 'function') {
+                            onSelectStickerCallback(sticker);
+                        }
+                    }}
+                />
+                <ReactionPicker isReaction={isReaction} popupPos={popupPos} setIsReaction={setIsReaction} activeCommentId={cmtId} onSelectReaction={(reaction, id) => addVotesRef.current?.(reaction, id)} />
             </div>
         </div>
 

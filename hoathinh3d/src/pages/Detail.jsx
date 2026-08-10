@@ -8,21 +8,21 @@ import MovieBody from '../components/MovieBody';
 import MovieRatingModal from '../components/MovieRatingModal'
 import UnauthCommentsSystem from '../components/UnauthCommentsSystem';
 import TuTienComments from '../components/TuTienComments1';
-// import styles from '../../public/detail.css?raw'
+import styles from '../../public/detail.css?raw'
 import Sticker from '../components/Sticker';
 import ReactionPicker from '../components/ReactionPicker';
 
 export default function Detail() {
     // 1. Đọc file từ /public/detail.css đồng bộ ngay khi module JS khởi chạy (0ms delay khi React render)
-    const getPublicFileRaw = (url) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url, false); // false = Synchronous (Chạy đồng bộ)
-        xhr.send(null);
-        return xhr.responseText;
-    };
+    // const getPublicFileRaw = (url) => {
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('GET', url, false); // false = Synchronous (Chạy đồng bộ)
+    //     xhr.send(null);
+    //     return xhr.responseText;
+    // };
 
     // Chuỗi CSS được nạp TỨC THÌ (Sync) từ public, biến 'styles' có ngay lập tức
-    const styles = getPublicFileRaw('/detail.css');
+    // const styles = getPublicFileRaw('/detail.css');
 
     // 1. Tạo State quản lý trạng thái đóng/mở của màn hình tìm kiếm (Mặc định là đóng)
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -45,22 +45,6 @@ export default function Detail() {
         alert(`Đã nhận được đánh giá ${score} sao của bạn hệ thống!`);
         setIsRatingOpen(false); // Đóng modal sau khi gửi thành công
     };
-    /*useEffect(() => {
-        // 1. Tự động tạo một thẻ <link> để nạp file CSS cũ vào đầu trang
-        const linkElement = document.createElement('link');
-        linkElement.rel = 'stylesheet';
-        linkElement.href = './detail.css'; // Đường dẫn đến file CSS gốc của bạn
-        linkElement.id = 'hoathinh3d-comment-css';
-        document.head.appendChild(linkElement);
-
-        // 2. MẸO QUAN TRỌNG: Khi người dùng tắt component hoặc chuyển trang, xóa thẻ link này đi
-        return () => {
-            const dynamicLink = document.getElementById('hoathinh3d-comment-css');
-            if (dynamicLink) {
-                dynamicLink.remove(); // Xóa sạch dấu vết CSS, không lo đụng hàng trang khác!
-            }
-        };
-    }, []);*/
 
     const [isOpen, setIsOpen] = useState(false);
     // Lưu callback xử lý sticker từ CommentForm gửi lên
