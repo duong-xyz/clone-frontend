@@ -46073,7 +46073,7 @@ div#list-item-notification {
 .wpd-comment.wrap-vip-24-month>.wpd-comment-wrap>.wpd-comment-right,
 .wpd-comment.wrap-vip-36-month>.wpd-comment-wrap>.wpd-comment-right {
     border: 3px solid transparent;
-    border-image: url(/wp-content/themes/halimmovies-child/assets/image/gif/vip-2y.gif) 20 stretch;
+    border-image: url(/stickers/vip-2y.gif) 20 stretch;
     color: #fff;
     padding: 10px
 }
@@ -59813,7 +59813,7 @@ span.hint.hint--right {
 #wpdcom .wpd-blog-thai_at .wpd-comment-author,
 #wpdcom .wpd-blog-thai_at_hau .wpd-comment-author,
 #wpdcom .wpd-blog-thai_at_trung .wpd-comment-author {
-    background: url(/wp-content/themes/halimmovies-child/assets/image/httl/thai-at-final.webp);
+    background: url(/stickers/thai-at-final.webp);
     -webkit-background-clip: text;
     background-clip: text;
     background-position: 50%;
